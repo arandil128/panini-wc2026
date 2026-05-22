@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/data/album.db
+    volumes:
+      - album-data:/data
+      - album-uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  album-data:
+  album-uploads:

@@ -1,0 +1,45 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+model Section {
+  id       String    @id
+  name     String
+  order    Int       @unique
+  stickers Sticker[]
+}
+
+model Sticker {
+  id          String  @id
+  sectionId   String
+  number      Int
+  playerName  String?
+  description String?
+  isSpecial   Boolean @default(false)
+  isBadge     Boolean @default(false)
+  isTeamPhoto Boolean @default(false)
+  section     Section @relation(fields: [sectionId], references: [id])
+
+  collectionEntry CollectionEntry?
+  duplicate       Duplicate?
+}
+
+model CollectionEntry {
+  id        Int      @id @default(autoincrement())
+  stickerId String   @unique
+  pastedAt  DateTime @default(now())
+  sticker   Sticker  @relation(fields: [stickerId], references: [id])
+}
+
+model Duplicate {
+  id        Int     @id @default(autoincrement())
+  stickerId String  @unique
+  quantity  Int     @default(1)
+  sticker   Sticker @relation(fields: [stickerId], references: [id])
+}
