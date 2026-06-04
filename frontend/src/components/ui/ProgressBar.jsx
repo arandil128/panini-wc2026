@@ -1,9 +1,13 @@
-export default function ProgressBar({ value, max, className = '' }) {
+export default function ProgressBar({ value, max, className = '', gold = false }) {
   const pct = max > 0 ? Math.round((value / max) * 100) : 0;
   return (
-    <div className={`w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 ${className}`}>
+    <div className={`w-full rounded-full h-2.5 overflow-hidden ${className || 'bg-gray-200 dark:bg-gray-700'}`}>
       <div
-        className="bg-blue-600 dark:bg-blue-500 h-2.5 rounded-full transition-all duration-500"
+        className={`h-full rounded-full transition-all duration-700 ${
+          gold
+            ? 'bg-gradient-to-r from-panini-gold to-yellow-300'
+            : 'bg-gradient-to-r from-panini-blue to-panini-blue-light'
+        }`}
         style={{ width: `${pct}%` }}
       />
     </div>

@@ -29,15 +29,15 @@ export default function CodeInput({ onConfirm }) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Ingresá los códigos (separados por espacio, coma o nueva línea)
+        <label className="block text-xs font-display font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+          Códigos de figuritas (separados por espacio, coma o línea)
         </label>
         <textarea
           value={text}
           onChange={e => setText(e.target.value)}
-          placeholder="ARG17 ARG18&#10;BRA5, FRA3&#10;FWC1"
+          placeholder={"ARG17 ARG18\nBRA5, FRA3\nFWC1"}
           rows={6}
-          className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+          className="input-base font-mono resize-y"
         />
       </div>
 
@@ -60,12 +60,14 @@ export default function CodeInput({ onConfirm }) {
         <button
           onClick={handleConfirm}
           disabled={valid.length === 0}
-          className="px-6 py-2.5 rounded-xl bg-panini-blue text-white font-semibold disabled:opacity-40 hover:bg-blue-800 transition-colors"
+          className="btn-primary"
         >
           Pegar {valid.length > 0 ? `(${valid.length})` : ''}
         </button>
         {invalid.length > 0 && (
-          <span className="text-sm text-red-500">{invalid.length} código{invalid.length > 1 ? 's' : ''} inválido{invalid.length > 1 ? 's' : ''} ignorado{invalid.length > 1 ? 's' : ''}</span>
+          <span className="text-sm text-panini-red font-display">
+            {invalid.length} código{invalid.length > 1 ? 's' : ''} inválido{invalid.length > 1 ? 's' : ''} ignorado{invalid.length > 1 ? 's' : ''}
+          </span>
         )}
       </div>
     </div>

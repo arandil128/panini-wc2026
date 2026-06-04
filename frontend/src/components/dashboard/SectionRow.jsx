@@ -19,27 +19,52 @@ export default function SectionRow({ section }) {
   }
 
   const pct = section.total > 0 ? Math.round((section.owned / section.total) * 100) : 0;
+  const isComplete = pct === 100;
 
   return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+    <div className={`bg-white dark:bg-panini-card-dark rounded-2xl overflow-hidden shadow-sm
+      border transition-shadow duration-200
+      ${isComplete
+        ? 'border-panini-gold shadow-panini-gold/20'
+        : 'border-gray-100 dark:border-panini-blue/20 hover:shadow-md'
+      }`}
+    >
       <button
         onClick={toggle}
-        className="w-full flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left"
+        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-panini-cream dark:hover:bg-panini-blue/10 transition-colors text-left"
       >
-        <span className="text-base">{section.flag || '🌐'}</span>
-        <span className="font-semibold flex-1 text-sm">{section.name}</span>
-        <span className="text-xs text-gray-500 dark:text-gray-400 w-16 text-right">
+        <span className="text-2xl w-8 text-center flex-shrink-0 leading-none">{section.flag || '🌐'}</span>
+
+        <span className="font-display font-semibold flex-1 text-sm text-panini-blue dark:text-blue-300 uppercase tracking-wide">
+          {section.name}
+        </span>
+
+        {isComplete && (
+          <span className="text-panini-gold text-xs font-bold">✦ Completo</span>
+        )}
+
+        <span className="text-xs text-gray-400 dark:text-gray-500 w-14 text-right font-mono shrink-0">
           {section.owned}/{section.total}
         </span>
-        <div className="w-24">
-          <ProgressBar value={section.owned} max={section.total} />
+
+        <div className="w-20 shrink-0">
+          <ProgressBar value={section.owned} max={section.total} gold />
         </div>
-        <span className="text-xs text-gray-400 w-8 text-right">{pct}%</span>
-        <span className="text-gray-400 text-sm ml-1">{open ? '▲' : '▼'}</span>
+
+        <span className="text-xs font-display font-bold text-panini-gold w-9 text-right shrink-0">
+          {pct}%
+        </span>
+
+        <span
+          className="text-panini-blue/40 dark:text-blue-400/50 text-xs shrink-0 transition-transform duration-200"
+          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', display: 'inline-block' }}
+        >
+          ▼
+        </span>
       </button>
 
       {open && (
-        <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950">
+        <div className="animate-slide-down border-t border-gray-100 dark:border-panini-blue/20 bg-panini-cream/40 dark:bg-panini-dark-navy/50">
           {loading ? (
             <div className="flex justify-center py-6">
               <Spinner />

@@ -45,35 +45,44 @@ export default function DuplicatesPage() {
 
   return (
     <div className="max-w-2xl mx-auto flex flex-col gap-6">
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-        Repetidas {total > 0 && <span className="text-base font-normal text-gray-400">({total} total)</span>}
+      <h1 className="page-title">
+        Repetidas{' '}
+        {total > 0 && (
+          <span className="text-base font-normal text-gray-400 normal-case tracking-normal">
+            ({total} total)
+          </span>
+        )}
       </h1>
 
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow p-5">
+      <div className="card border border-gray-100 dark:border-panini-blue/20 p-5">
         <form onSubmit={addDuplicate} className="flex gap-2 items-end mb-5">
           <div className="flex-1">
-            <label className="block text-xs text-gray-500 mb-1">Código</label>
+            <label className="block text-xs font-display text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">
+              Código
+            </label>
             <input
               value={addCode}
               onChange={e => setAddCode(e.target.value)}
               placeholder="ARG17"
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base font-mono"
             />
           </div>
           <div className="w-20">
-            <label className="block text-xs text-gray-500 mb-1">Cantidad</label>
+            <label className="block text-xs font-display text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">
+              Cant.
+            </label>
             <input
               type="number"
               min={1}
               value={addQty}
               onChange={e => setAddQty(Number(e.target.value))}
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base"
             />
           </div>
           <button
             type="submit"
             disabled={adding || !addCode.trim()}
-            className="px-4 py-2 rounded-lg bg-panini-blue text-white font-semibold text-sm disabled:opacity-40 hover:bg-blue-800 transition-colors"
+            className="btn-primary"
           >
             Agregar
           </button>
@@ -82,9 +91,13 @@ export default function DuplicatesPage() {
         {loading ? (
           <div className="flex justify-center py-8"><Spinner /></div>
         ) : dups.length === 0 ? (
-          <p className="text-sm text-gray-400 text-center py-6">No tenés repetidas registradas</p>
+          <p className="text-sm text-gray-400 text-center py-6 font-display uppercase tracking-wide">
+            No tenés repetidas registradas
+          </p>
         ) : (
-          <div>{dups.map(d => <DuplicateRow key={d.stickerId} dup={d} onChanged={load} />)}</div>
+          <div className="flex flex-col gap-1">
+            {dups.map(d => <DuplicateRow key={d.stickerId} dup={d} onChanged={load} />)}
+          </div>
         )}
       </div>
     </div>

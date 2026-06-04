@@ -6,7 +6,7 @@ import useTheme from '../../hooks/useTheme';
 export default function Shell() {
   const [dark, toggleDark] = useTheme();
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-panini-cream dark:bg-panini-dark-navy text-gray-900 dark:text-gray-100">
       <Navbar dark={dark} onToggle={toggleDark} />
       <main className="max-w-7xl mx-auto px-4 py-6">
         <Outlet />
@@ -14,8 +14,14 @@ export default function Shell() {
       <Toaster
         position="bottom-right"
         toastOptions={{
-          className: 'dark:bg-gray-800 dark:text-white',
-          duration: 3000,
+          style: {
+            background: '#1a3a6b',
+            color: '#fff',
+            fontFamily: 'Oswald, sans-serif',
+            letterSpacing: '0.05em',
+            borderRadius: '12px',
+          },
+          duration: 2500,
         }}
       />
     </div>
